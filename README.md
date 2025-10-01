@@ -15,12 +15,15 @@ A GNOME Evolution mail client module that integrates OpenAI's GPT models to help
 ## Screenshots
 
 ![Preferences Dialog](docs/screenshot-preferences.png)
+
 *Preferences dialog with model selection*
 
 ![Context Menu](docs/screenshot-context-menu.png)
+
 *Right-click menu integration*
 
 ![Result](docs/screenshot-result-dutch.png)
+
 *The result (showing that the output can be in another language as well)*
 
 ## Requirements
