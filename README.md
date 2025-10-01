@@ -21,7 +21,7 @@ A GNOME Evolution mail client module that integrates OpenAI's GPT models to help
 *Right-click menu integration*
 
 ![Result](docs/screenshot-result-dutch.png)
-*The result (showing even that the output can be automatically done in another language)*
+*The result (showing that the output can be in another language as well)*
 
 ## Requirements
 
