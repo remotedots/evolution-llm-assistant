@@ -1,0 +1,29 @@
+# Compiled binaries
+*.so
+*.o
+*.a
+
+# Debug and log files
+*.log
+
+# Editor and IDE files
+*~
+*.swp
+*.swo
+.vscode/
+.idea/
+*.kate-swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Configuration (user-specific)
+*.conf
+!config/*.c
+!config/*.h
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
