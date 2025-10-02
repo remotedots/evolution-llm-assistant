@@ -141,20 +141,9 @@ void llm_client_extract_sender_info(const gchar *email_headers,
     g_free(from_value);
 }
 
-static gchar* build_user_prompt(LLMRequest *request, PluginConfig *config) {
-    GString *prompt = g_string_new("");
-
-    g_string_append_printf(prompt, "The response should be from %s <%s>. ",
-                          config->user_name ? config->user_name : "User",
-                          config->user_email ? config->user_email : "user@example.com");
-
-    if (request->original_email) {
-        g_string_append_printf(prompt, "\n\nOriginal email context:\n%s", request->original_email);
-    }
-
-    g_string_append_printf(prompt, "\n\nUser instruction: %s", request->prompt);
-
-    return g_string_free(prompt, FALSE);
+static gchar* build_user_prompt(LLMRequest *request, PluginConfig *config G_GNUC_UNUSED) {
+    /* Simply return the selected text without any prefixes */
+    return g_strdup(request->prompt);
 }
 
 /**
@@ -292,6 +281,14 @@ gboolean llm_client_generate_response(LLMClient *client, LLMRequest *request) {
     JsonNode *root = json_builder_get_root(builder);
     json_generator_set_root(generator, root);
     gchar *json_data = json_generator_to_data(generator, NULL);
+
+    /* Debug: Print the request being sent */
+    g_print("\n=== LLM Request Debug ===\n");
+    g_print("Model: %s\n", client->config->model);
+    g_print("System Prompt: %s\n", client->config->system_prompt ? client->config->system_prompt : "You are a helpful email writing assistant.");
+    g_print("User Prompt: %s\n", user_prompt);
+    g_print("Full JSON payload:\n%s\n", json_data);
+    g_print("========================\n\n");
 
     curl_easy_setopt(curl, CURLOPT_URL, "https://api.openai.com/v1/chat/completions");
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, json_data);

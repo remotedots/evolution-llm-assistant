@@ -46,8 +46,6 @@ static void create_default_config(const gchar *config_path) {
     g_key_file_set_string(keyfile, "openai", "model", DEFAULT_MODEL);
     g_key_file_set_string(keyfile, "openai", "system_prompt", "You are a helpful email writing assistant.");
     g_key_file_set_string(keyfile, "ui", "hotkey", DEFAULT_HOTKEY);
-    g_key_file_set_string(keyfile, "user", "name", "Your Name");
-    g_key_file_set_string(keyfile, "user", "email", "your.email@example.com");
 
     gchar *content = g_key_file_to_data(keyfile, NULL, NULL);
     g_file_set_contents(config_path, content, -1, NULL);
@@ -83,8 +81,6 @@ PluginConfig* config_load(void) {
     config->model = g_key_file_get_string(keyfile, "openai", "model", NULL);
     config->system_prompt = g_key_file_get_string(keyfile, "openai", "system_prompt", NULL);
     config->hotkey = g_key_file_get_string(keyfile, "ui", "hotkey", NULL);
-    config->user_name = g_key_file_get_string(keyfile, "user", "name", NULL);
-    config->user_email = g_key_file_get_string(keyfile, "user", "email", NULL);
 
     if (!config->model) {
         config->model = g_strdup(DEFAULT_MODEL);
@@ -110,8 +106,6 @@ void config_free(PluginConfig *config) {
     g_free(config->openai_api_key);
     g_free(config->model);
     g_free(config->hotkey);
-    g_free(config->user_name);
-    g_free(config->user_email);
     g_free(config->system_prompt);
     g_free(config);
 }
@@ -143,10 +137,6 @@ gboolean config_save(PluginConfig *config) {
                           config->system_prompt ? config->system_prompt : "You are a helpful email writing assistant.");
     g_key_file_set_string(keyfile, "ui", "hotkey",
                           config->hotkey ? config->hotkey : DEFAULT_HOTKEY);
-    g_key_file_set_string(keyfile, "user", "name",
-                          config->user_name ? config->user_name : "");
-    g_key_file_set_string(keyfile, "user", "email",
-                          config->user_email ? config->user_email : "");
 
     gchar *content = g_key_file_to_data(keyfile, NULL, NULL);
     gboolean result = g_file_set_contents(config_path, content, -1, NULL);

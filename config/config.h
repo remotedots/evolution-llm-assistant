@@ -23,8 +23,6 @@ typedef struct {
     gchar *openai_api_key;
     gchar *model;
     gchar *hotkey;
-    gchar *user_name;
-    gchar *user_email;
     gchar *system_prompt;
 } PluginConfig;
 
